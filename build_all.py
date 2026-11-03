@@ -141,14 +141,16 @@ def main():
     if summary['objects_placed'] == 0:
         print('WARNING: No placed objects; check output/report.json (missing library or OBJ format).', flush=True)
     if a.elevation != 'off':
-        elevation_cmd=[sys.executable, ROOT/'fix_elevation.py','--scenery',output,'--clearance',str(a.elevation_clearance)]
+        elevation_cmd=[sys.executable, ROOT/'fix_elevation.py','--scenery',output,'--clearance',str(a.elevation_clearance),'--model-base','footprint']
         if a.elevation=='apply': elevation_cmd.append('--apply')
         run(elevation_cmd)
+    elevation_report=json.loads((output/'elevation-report.json').read_text())
+    summary['object_alignment']={'mode':elevation_report['model_base'],'placements':elevation_report['placement_resolved'], 'footprint_objects':len(elevation_report.get('footprint_stats',[])), 'max_lift_m':max((x['lift_m'] for x in elevation_report.get('footprint_stats',[])),default=0)}
     run([sys.executable, ROOT/'project_draped.py', '--scenery', output, '--max-edge', str(a.drape_edge)])
     drape_report = json.loads((output/'draped-build-report.json').read_text())
     summary['draped_projected'] = drape_report['projected']
     summary['draped_disabled'] = drape_report['disabled']
-    summary['version']='0.3.14.2'
+    summary['version']='0.3.15.0'
     summary['optional_library_packages'] = len(packages)
     summary['unresolved_asset_refs'] = report.get('unresolved_asset_refs', {})
     summary['night_lights']=report.get('night_lights',{})
