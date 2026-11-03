@@ -205,7 +205,7 @@ def run(args):
         (target / 'report.json').write_text(json.dumps({'airport': airport, 'dsf_count': 0}, indent=2, ensure_ascii=False))
         print(json.dumps(airport, indent=2, ensure_ascii=False))
         return
-    log = {'airport': airport, 'dsf_count': len(dsfs), 'placed': 0, 'skipped': [], 'models': 0, 'triangles': 0, 'elevation_mode': args.object_placement, 'axis_transform': 'xp_eus_to_fg_suw_v036', 'version': '0.3.14.6', 'night_lights': {'lights_emitted': 0, 'assets_with_lights': 0, 'texture_lit_models': 0, 'unknown_names': {}, 'source_commands': {}}}
+    log = {'airport': airport, 'dsf_count': len(dsfs), 'placed': 0, 'skipped': [], 'models': 0, 'triangles': 0, 'elevation_mode': args.object_placement, 'axis_transform': 'xp_eus_to_fg_suw_v036', 'version': '0.3.15.0', 'night_lights': {'lights_emitted': 0, 'assets_with_lights': 0, 'texture_lit_models': 0, 'unknown_names': {}, 'source_commands': {}}}
     model_cache = {}
     unresolved_refs = defaultdict(int)
     for dsf in dsfs:
